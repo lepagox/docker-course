@@ -1,0 +1,5 @@
+# build iage with a tag
+docker build -t lepago/node_hello_world:latest .
+
+# run this image
+docker run -p 3300:3000 lepago/node_hello_world:latest

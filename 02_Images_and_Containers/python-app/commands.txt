@@ -1,0 +1,5 @@
+# build 
+docker build -t py-bmi .
+
+# run
+docker run -i py-bmi

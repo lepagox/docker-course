@@ -1,0 +1,5 @@
+# build image with a tag
+docker build -t node-goal
+
+# run this image
+docker run -p 3333:80 node-goal

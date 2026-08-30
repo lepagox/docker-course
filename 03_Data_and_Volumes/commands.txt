@@ -1,0 +1,5 @@
+# build
+docker build -t feedback-app:dev --build-arg DEFAULT_PORT=8000 .
+
+# run
+docker run -p 4000:80 -d --name feedback-app:dev -v feedback:/app/feedback -v "$(pwd):/app:ro" -v /app/temp -v /app/node_modules feedback
