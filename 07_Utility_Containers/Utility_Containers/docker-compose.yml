@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  npm:
+    build: ./
+    stdin_open: true # this plus tty below set to true is the same as -it in command line
+    tty: true
+    volumes:
+      - ./:/app

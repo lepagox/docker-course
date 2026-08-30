@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasks-deployment
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: tasks
+  template:
+    metadata:
+      labels:
+        app: tasks
+    spec:
+      containers:
+        - name: tasks
+          image: lepago/kub-demo-tasks:latest
+          env:
+            - name: AUTH_ADDRESS
+              value: "auth-service.default"
+              #value: "10.111.27.156"
+            - name: TASKS_FOLDER
+              value: tasks
+          imagePullPolicy: Always
+      volumes:
+        - name: tasks-volume
+          hostPath:
+            path: /tasks
+            type: DirectoryOrCreate              

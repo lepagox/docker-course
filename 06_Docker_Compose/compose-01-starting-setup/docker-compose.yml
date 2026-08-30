@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  mongodb:
+    image: 'mongo'
+    # we don't need to add --rm or -d here; --rm is by default and -d can be used when running this to apply to all services
+    volumes:
+      - data:/data/db
+    # optional - we can force a container name rather than letting Docker create the name
+    # container_name: mongodb
+    environment: # could also use an env file with env_file: and a dash list underneath
+      # MONGO_INITDB_ROOT_USERNAME: peng  # for key: value objects you don't need a dash
+      #- MONGO_INITDB_ROOT_USERNAME=peng # for single values key=value you do need a dash
+      # MONGO_INITDB_ROOT_PASSWORD: mima
+      env_file:
+        ./env/mongo.env
+    #networks:  # not necessary as Docker will create a default network that all services in this file will use
+     # - networkName
+
+
+  backend:
+    # image: 'goals-node' # we may have removed our custom image so instead of this we can specify how to build below
+    build: ./backend # with this command Docker will look for Dockerfile within ./backend folder
+    # build: # longer version specifying context and dockerfile
+    #   context: ./backend
+      # dockerfile: Dockerfile-dev # not needed if named "Dockerfile"
+      # args:
+      #   some-arg: 1
+    ports:
+      - '80:80'
+    volumes:
+      - logs:/app/logs
+      # for the bind mount we don't need to use the absolute path but the relative path as seen from docker-compose.yml
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true # this and below are probably not needed now that docker 
+    tty: true # doesn't require the -ti flag when running for interactive mode
+    depends_on:
+      - backend
+
+# named volumes need to be listed here (can be shared among containers)
+# bind mounts and anonymous volumes must not be put here
+volumes:
+  data:
+  logs:
