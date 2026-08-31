@@ -30,9 +30,13 @@ docker run --name mongodb -v data:/data/db -d --rm --network goals mongo
 # run backend again but with live code (bind mount)
 docker run --name goals-backend -v "$(pwd):/app" -v logs:/app/logs -v /app/node_modules --rm -d --network goals -p 80:80 goals-node
 
+# now to run db with creds
+docker run --name mongodb -v data:/data/db -d --rm --network goals -e MONGO_INITDB_ROOT_USERNAME=peng -e MONGO_INITDB_ROOT_PASSWORD=mima mongo
+
 # after removing hard-coded mongo creds (put in env file or Dockerfile) restart with overriding creds in command line
 # see comment in app.js mongoose.connect()
 docker run --name goals-backend -v "$(pwd):/app" -v logs:/app/logs -v /app/node_modules -e MONGODB_USERNAME=peng --rm  --network goals -p 80:80 goals-node
 
- see comment in app.js mongoose.connect()
+# update React to have a Bind Mount to live code
+docker run -v "$(pwd):/app/src:/app/src" --name goals-frontend --rm -d -p 3000:3000 --network goals -it goals-react
 
