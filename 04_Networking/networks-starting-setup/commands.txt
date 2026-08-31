@@ -1,0 +1,35 @@
+# run simple db (will download if necessary)
+docker run -d mongo
+
+# find its IP
+docker inspect mongo
+
+# create networks - docker willl work out IPs, but not automatically create networks
+docker run -network my_network
+
+# to create a network - now container can connect to another container on the same network using container name
+docker network create my_network
+
+# see all networks
+docker network ls
+
+# create our network
+docker network create favorites-net
+
+# now can run mongo db with a network
+docker run -d --name mongodb --network favorites-net  mongo
+
+# now can build image
+docker build -t favorites-node .
+
+# and run it (should be able to use image name instead of ID)
+docker run -d --name favorites --network favorites-net --rm -p 3000:3000 favorites-node
+3edbc7f9089f17cdf93c36c3137c25f01e7b84d5eaa2028c15a12f57c75feea4
+
+# check logs
+docker logs favorites
+
+# stop the containers
+docker stop favorites
+docker stop mongodb
+
