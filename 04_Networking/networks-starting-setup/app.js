@@ -68,6 +68,8 @@ app.get('/people', async (req, res) => {
 });
 
 mongoose.connect(
+  // dn prior to mongo being containerised we would use this code to talk to the local mongo instance
+  // 'mongodb://host.docker.internal:27017/swfavorites',
   'mongodb://mongodb:27017/swfavorites',
   { useNewUrlParser: true },
   (err) => {
