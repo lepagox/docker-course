@@ -85,7 +85,7 @@ app.delete('/goals/:id', async (req, res) => {
 
 mongoose.connect(
   // dn change address to container name now that we are using Docker networking
-  // dn removing the db creds to use env variables instead (replace singe quotes with backticks)
+  // dn removing the db creds to use env variables instead (replace single quotes with backticks)
   // 'mongodb://peng:mima@mongodb:27017/course-goals?authSource=admin',
   `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb:27017/course-goals?authSource=admin`,
   {
