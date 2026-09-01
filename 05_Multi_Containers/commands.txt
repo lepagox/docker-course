@@ -38,5 +38,5 @@ docker run --name mongodb -v data:/data/db -d --rm --network goals -e MONGO_INIT
 docker run --name goals-backend -v "$(pwd):/app" -v logs:/app/logs -v /app/node_modules -e MONGODB_USERNAME=peng --rm  --network goals -p 80:80 goals-node
 
 # update React to have a Bind Mount to live code
-docker run -v "$(pwd):/app/src:/app/src" --name goals-frontend --rm -d -p 3000:3000 --network goals -it goals-react
+docker run -v "$(pwd)/src:/app/src" --name goals-frontend --rm -d -p 3000:3000 --network goals -it goals-react
 
