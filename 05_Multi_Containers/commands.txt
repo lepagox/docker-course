@@ -2,10 +2,7 @@
 
 # build image then run
 docker build -t goals-node .
-
 docker run --name goals-backend --rm -d -p 80:80 goals-node
-
-
 
 # Frontend
 
@@ -27,7 +24,7 @@ docker run -d --rm --name mongodb --network goals mongo
 # stop mongo then restart with command below - now data should be kept between restarts
 docker run --name mongodb -v data:/data/db -d --rm --network goals mongo
 
-# run backend again but with live code (bind mount)
+# run backend again but with live code (bind mount) and write logs to /app/logs within the container (not locally)
 docker run --name goals-backend -v "$(pwd):/app" -v logs:/app/logs -v /app/node_modules --rm -d --network goals -p 80:80 goals-node
 
 # now to run db with creds
