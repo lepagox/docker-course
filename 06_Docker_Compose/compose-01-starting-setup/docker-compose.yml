@@ -1,4 +1,6 @@
-version: '3.8'
+# dn version is now deprecated and will be removed in a future release. Use the versionless format instead.
+# but will need to use "docker compose" instead of "docker-compose" to run the commands
+# version: '3.8'
 services:
   mongodb:
     image: 'mongo'
@@ -32,7 +34,11 @@ services:
       # for the bind mount we don't need to use the absolute path but the relative path as seen from docker-compose.yml
       - ./backend:/app
       - /app/node_modules
-    env_file:
+    # can force container name rather than letting Docker create the name  
+    # container_name: mongodb
+    #environment:
+     # - name=value
+    env_file: # we can use an env file to set environment variables for the container rather than specifying them here
       - ./env/backend.env
     depends_on:
       - mongodb

@@ -1,0 +1,9 @@
+# now this file is pretty small as most of the commmands have been "translated" to docker compose
+
+# start (build first if necessary) the containers in docker-compose.yml
+# can use --build to force a rebuild
+docker compose up -d
+
+# stop/remove the containers (--rm is used on up by default)
+
+docker compose down
